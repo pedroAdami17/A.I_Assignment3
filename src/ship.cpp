@@ -6,7 +6,7 @@
 
 Ship::Ship() : m_maxSpeed(10.0f)
 {
-	TextureManager::Instance()->load("../Assets/textures/ship3.png", "ship");
+	TextureManager::Instance()->load("../Assets/textures/survivor-move_shotgun_0.png", "ship");
 
 	auto size = TextureManager::Instance()->getTextureSize("ship");
 	setWidth(size.x);

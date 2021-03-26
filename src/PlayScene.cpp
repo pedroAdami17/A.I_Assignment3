@@ -264,7 +264,7 @@ void PlayScene::start()
 	m_computeTileCosts();
 
 	//Background music
-	SoundManager::Instance().load("../Assets/audio/bg_music.ogg", "background_music", SOUND_MUSIC);
+	SoundManager::Instance().load("../Assets/audio/bgMusic.ogg", "background_music", SOUND_MUSIC);
 	SoundManager::Instance().playMusic("background_music", -1);
 	SoundManager::Instance().setMusicVolume(15);
 }
