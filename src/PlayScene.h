@@ -4,6 +4,7 @@
 
 #include "Scene.h"
 #include "Button.h"
+#include "Enemy.h"
 #include "Heuristic.h"
 #include "Label.h"
 #include "Obstacle.h"
@@ -37,7 +38,7 @@ private:
 	Label* m_pInstructionsLabel_2;
 	Label* m_pInstructionsLabel_3;
 	Label* m_pInstructionsLabel_4;
-	Target* m_pTarget;
+	Enemy* m_pEnemy;
 	Ship* m_pShip;
 	Wall* m_pWall_1;
 	Wall* m_pWall_2;
@@ -85,6 +86,8 @@ private:
 	void m_moveShip();
 	int moveCounter = 0;
 	bool m_shipIsMoving = false;
+
+	void m_CheckEnemyLOS(DisplayObject* object);
 };
 
 #endif /* defined (__PLAY_SCENE__) */

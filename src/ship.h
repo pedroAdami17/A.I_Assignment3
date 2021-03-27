@@ -6,7 +6,7 @@
 #include "NavigationObject.h"
 #include "TextureManager.h"
 
-class Ship final : public NavigationObject
+class Ship final : public DisplayObject
 {
 public:
 	Ship();

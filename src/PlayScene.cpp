@@ -3,6 +3,7 @@
 #include "EventManager.h"
 
 // required for IMGUI
+#include "Enemy.h"
 #include "imgui.h"
 #include "imgui_sdl.h"
 #include "Renderer.h"
@@ -36,6 +37,8 @@ void PlayScene::update()
 	{
 		m_moveShip();
 	}
+
+	m_CheckEnemyLOS(m_pShip);
 }
 
 void PlayScene::clean()
@@ -74,29 +77,6 @@ void PlayScene::handleEvents()
 	{
 		m_shipIsMoving = true;
 	}
-	
-	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_H))
-	{
-		m_setGridEnabled(!m_getGridEnabled());
-	}
-
-		if (EventManager::Instance().isKeyDown(SDL_SCANCODE_R))
-		{
-
-			std::cout << "Resesting positions";
-			m_shipIsMoving = false;
-
-			
-			m_pPathLists.clear();
-
-			m_pShip->getTransform()->position = m_getTile(1, 3)->getTransform()->position + offset;
-			m_pShip->setGridPosition(1, 3);
-			m_getTile(1, 3)->setTileStatus(START);
-
-			m_pTarget->getTransform()->position = m_getTile(15, 11)->getTransform()->position + offset;
-			m_pTarget->setGridPosition(15, 11);
-			m_getTile(15, 11)->setTileStatus(GOAL);
-		}
 }
 
 void PlayScene::start()
@@ -128,17 +108,13 @@ void PlayScene::start()
 
 	//add the ship to the scene as a start project
 	m_pShip = new Ship();
-	m_pShip->getTransform()->position = m_getTile(1, 3)->getTransform()->position + offset;
-	m_pShip->setGridPosition(1, 3);
-	m_getTile(1, 3)->setTileStatus(START);
+	m_pShip->getTransform()->position = glm::vec2(200.0f, 300.0f);
 	addChild(m_pShip);
 
-	//add the target to the scene as a goal
-	m_pTarget = new Target();
-	m_pTarget->getTransform()->position = m_getTile(15, 11)->getTransform()->position + offset;
-	m_pTarget->setGridPosition(15, 11);
-	m_getTile(15, 11)->setTileStatus(GOAL);
-	addChild(m_pTarget);
+	//add the Enemy to the scene 
+	m_pEnemy = new Enemy();
+	m_pEnemy->getTransform()->position = glm::vec2(400.0f, 300.0f);
+	addChild(m_pEnemy, 2);
 
 	//add the walls as obstacles for the ship
 	m_pWall_1 = new Wall();
@@ -280,65 +256,55 @@ void PlayScene::GUI_Function()
 	// See examples by uncommenting the following - also look at imgui_demo.cpp in the IMGUI filter
 	//ImGui::ShowDemoWindow();
 
-	ImGui::Begin("GAME3001 - Lab 5", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
+	ImGui::Begin("GAME3001 - Assignment 3", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
 
-	static bool isGridEnabled = false;
-	if (ImGui::Checkbox("Grid Enabled", &isGridEnabled))
+	// Allow enemy rotation
+	static int angle;
+	if(ImGui::SliderInt("Enemy Direction", &angle, -360, 360))
 	{
-		// toggle grid on/off
-		m_setGridEnabled(isGridEnabled);
+		m_pEnemy->setCurrentHeading(angle);
 	}
 
 	ImGui::Separator();
 
-	auto radio = static_cast<int>(currentHeuristic);
-	ImGui::LabelText("", "Heuristic Type");
-	ImGui::RadioButton("Manhattan", &radio, static_cast<int>(MANHATTAN));
-	ImGui::SameLine();
-	ImGui::RadioButton("Euclidian", &radio, static_cast<int>(EUCLIDEAN));
-	if (currentHeuristic != Heuristic(radio))
+	static int survivorPosition[] = { m_pShip->getTransform()->position.x, m_pShip->getTransform()->position.y };
+	if (ImGui::SliderInt2("Start Position", survivorPosition, 0, 800))
 	{
-		currentHeuristic = Heuristic(radio);
-		m_computeTileCosts();
+		m_pShip->getTransform()->position.x = survivorPosition[0];
+		m_pShip->getTransform()->position.y = survivorPosition[1];
+		//// Row adjustment
+		//if (StartPosition[1] > Config::ROW_NUM - 1)
+		//{
+		//	StartPosition[1] = Config::ROW_NUM - 1;
+		//}
+
+		//SDL_RenderClear(Renderer::Instance()->getRenderer());
+		///*m_getTile(m_pShip->getGridPosition())->setTileStatus(UNVISITED);
+		//m_pShip->getTransform()->position = m_getTile(StartPosition[0], StartPosition[1])->getTransform()->position + offset;
+		//m_pShip->setGridPosition(StartPosition[0], StartPosition[1]);
+		//m_getTile(m_pShip->getGridPosition())->setTileStatus(START);*/
+		//SDL_SetRenderDrawColor(Renderer::Instance()->getRenderer(), 255, 255, 255, 255);
+		//SDL_RenderPresent(Renderer::Instance()->getRenderer());
 	}
 
-	ImGui::Separator();
-
-	static int StartPosition[] = { m_pShip->getGridPosition().x, m_pShip->getGridPosition().y };
-	if (ImGui::SliderInt2("Start Position", StartPosition, 0, Config::COL_NUM - 1))
+	static int enemyPosition[] = { m_pEnemy->getTransform()->position.x, m_pEnemy->getTransform()->position.y };
+	if (ImGui::SliderInt2("Enemy Position", enemyPosition, 0, 800))
 	{
-		// Row adjustment
-		if (StartPosition[1] > Config::ROW_NUM - 1)
-		{
-			StartPosition[1] = Config::ROW_NUM - 1;
-		}
+		m_pEnemy->getTransform()->position.x = enemyPosition[0];
+		m_pEnemy->getTransform()->position.y = enemyPosition[1];
+		//// Row adjustment
+		//if (enemyPosition[1] > Config::ROW_NUM - 1)
+		//{
+		//	enemyPosition[1] = Config::ROW_NUM - 1;
+		//}
 
-		SDL_RenderClear(Renderer::Instance()->getRenderer());
-		m_getTile(m_pShip->getGridPosition())->setTileStatus(UNVISITED);
-		m_pShip->getTransform()->position = m_getTile(StartPosition[0], StartPosition[1])->getTransform()->position + offset;
-		m_pShip->setGridPosition(StartPosition[0], StartPosition[1]);
-		m_getTile(m_pShip->getGridPosition())->setTileStatus(START);
-		SDL_SetRenderDrawColor(Renderer::Instance()->getRenderer(), 255, 255, 255, 255);
-		SDL_RenderPresent(Renderer::Instance()->getRenderer());
-	}
-
-	static int targetPosition[] = { m_pTarget->getGridPosition().x, m_pTarget->getGridPosition().y };
-	if (ImGui::SliderInt2("Target Position", targetPosition, 0, Config::COL_NUM - 1))
-	{
-		// Row adjustment
-		if (targetPosition[1] > Config::ROW_NUM - 1)
-		{
-			targetPosition[1] = Config::ROW_NUM - 1;
-		}
-
-		SDL_RenderClear(Renderer::Instance()->getRenderer());
-		m_getTile(m_pTarget->getGridPosition())->setTileStatus(UNVISITED);
-		m_pTarget->getTransform()->position = m_getTile(targetPosition[0], targetPosition[1])->getTransform()->position + offset;
-		m_pTarget->setGridPosition(targetPosition[0], targetPosition[1]);
-		m_getTile(m_pTarget->getGridPosition())->setTileStatus(GOAL);
-		m_computeTileCosts();
-		SDL_SetRenderDrawColor(Renderer::Instance()->getRenderer(), 255, 255, 255, 255);
-		SDL_RenderPresent(Renderer::Instance()->getRenderer());
+		//SDL_RenderClear(Renderer::Instance()->getRenderer());
+		///*m_getTile(m_pTarget->getGridPosition())->setTileStatus(UNVISITED);*/
+		//m_pEnemy->setGridPosition(targetPosition[0], targetPosition[1]);
+		//m_getTile(m_pTarget->getGridPosition())->setTileStatus(GOAL);
+		//m_computeTileCosts();
+		//SDL_SetRenderDrawColor(Renderer::Instance()->getRenderer(), 255, 255, 255, 255);
+		//SDL_RenderPresent(Renderer::Instance()->getRenderer());
 	}
 
 	ImGui::Separator();
@@ -437,129 +403,120 @@ void PlayScene::m_buildGrid()
 	std::cout << m_pGrid.size() << std::endl;
 }
 
-void PlayScene::m_computeTileCosts()
-{
-	float distance, dx, dy;
+//void PlayScene::m_computeTileCosts()
+//{
+//	float distance, dx, dy;
+//
+//	for (auto tile : m_pGrid)
+//	{
+//		switch (currentHeuristic)
+//		{
+//		case MANHATTAN:
+//			//Manhattan Distance
+//			dx = abs(tile->getGridPosition().x - m_p->getGridPosition().x);
+//			dy = abs(tile->getGridPosition().y - m_pTarget->getGridPosition().y);
+//			distance = dx + dy;
+//			break;
+//		case EUCLIDEAN:
+//			//Euclidean Distance
+//			distance = Util::distance(m_pTarget->getGridPosition(), tile->getGridPosition());
+//			break;
+//		}
+//
+//		tile->setTileCost(distance);
+//	}
+//}
 
-	for (auto tile : m_pGrid)
-	{
-		switch (currentHeuristic)
-		{
-		case MANHATTAN:
-			//Manhattan Distance
-			dx = abs(tile->getGridPosition().x - m_pTarget->getGridPosition().x);
-			dy = abs(tile->getGridPosition().y - m_pTarget->getGridPosition().y);
-			distance = dx + dy;
-			break;
-		case EUCLIDEAN:
-			//Euclidean Distance
-			distance = Util::distance(m_pTarget->getGridPosition(), tile->getGridPosition());
-			break;
-		}
-
-		tile->setTileCost(distance);
-	}
-}
-
-void PlayScene::m_findShortestPath()
-{
-	if (m_pPathLists.empty())
-	{
-		// add start position to the open list
-		auto startTile = m_getTile(m_pShip->getGridPosition());
-		startTile->setTileStatus(OPEN);
-		m_pOpenList.push_back(startTile);
-
-		bool goalFound = false;
-
-		// Loop until the OpenList is empty or the Goal is found
-		while (!m_pOpenList.empty() && !goalFound)
-		{
-			auto min = INFINITY;
-			Tile* minTile;
-			int minTileIndex = 0;
-			int count = 0;
-
-			std::vector<Tile*> neighbourList;
-			for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index)
-			{
-				neighbourList.push_back(m_pOpenList[0]->getNeighbourTile(NeighbourTile(index)));
-			}
-
-			for (auto neighbour : neighbourList)
-			{
-				if (neighbour->getTileStatus() != GOAL)
-				{
-					if (neighbour->getTileCost() < min)
-					{
-						min = neighbour->getTileCost();
-						minTile = neighbour;
-						minTileIndex = count;
-					}
-					count++;
-				}
-				else
-				{
-					minTile = neighbour;
-					m_pPathLists.push_back(minTile);
-					goalFound = true;
-					break;
-				}
-			}
-
-			for (auto neighbour : neighbourList)
-			{
-				if (neighbour->getTileStatus() != IMPASSABLE)
-				{
-					if (neighbour->getTileCost() < min)
-					{
-						min = neighbour->getTileCost();
-						m_pOpenList.push_back(minTile);
-						minTile = neighbour;
-						minTileIndex = count;
-					}
-					count++;
-				}
-				else 
-				{
-					minTile = neighbour;
-					m_pClosedList.push_back(minTile);
-					minTile->setTileStatus(CLOSED);
-				}
-			}
-
-			// remove the reference of the current tile in the open list
-			m_pPathLists.push_back(m_pOpenList[0]);
-			m_pOpenList.pop_back(); // empties the open list
-
-			//adding the min tile to the open list
-				m_pOpenList.push_back(minTile);
-				minTile->setTileStatus(OPEN);
-				neighbourList.erase(neighbourList.begin() + minTileIndex);
-			
-			// push all remaining neighbours onto the closed list
-			for (auto neighbour : neighbourList)
-			{
-				if (neighbour->getTileStatus() == UNVISITED)
-				{
-					neighbour->setTileStatus(CLOSED);
-					m_pClosedList.push_back(neighbour);
-				}
-			}
-		}
-
-		m_displayPathList();
-	}
-}
-
-void PlayScene::m_displayPathList()
-{
-	for (auto node : m_pPathLists)
-	{
-		std::cout << "(" << node->getGridPosition().x << ", " << node->getGridPosition().y << ")" << std::endl;
-	}
-	std::cout << "Path Lenght: " << m_pPathLists.size() << std::endl;
-}
+//void PlayScene::m_findShortestPath()
+//{
+//	if (m_pPathLists.empty())
+//	{
+//		// add start position to the open list
+//		auto startTile = m_getTile(m_pShip->getGridPosition());
+//		startTile->setTileStatus(OPEN);
+//		m_pOpenList.push_back(startTile);
+//
+//		bool goalFound = false;
+//
+//		// Loop until the OpenList is empty or the Goal is found
+//		while (!m_pOpenList.empty() && !goalFound)
+//		{
+//			auto min = INFINITY;
+//			Tile* minTile;
+//			int minTileIndex = 0;
+//			int count = 0;
+//
+//			std::vector<Tile*> neighbourList;
+//			for (int index = 0; index < NUM_OF_NEIGHBOUR_TILES; ++index)
+//			{
+//				neighbourList.push_back(m_pOpenList[0]->getNeighbourTile(NeighbourTile(index)));
+//			}
+//
+//			for (auto neighbour : neighbourList)
+//			{
+//				if (neighbour->getTileStatus() != GOAL)
+//				{
+//					if (neighbour->getTileCost() < min)
+//					{
+//						min = neighbour->getTileCost();
+//						minTile = neighbour;
+//						minTileIndex = count;
+//					}
+//					count++;
+//				}
+//				else
+//				{
+//					minTile = neighbour;
+//					m_pPathLists.push_back(minTile);
+//					goalFound = true;
+//					break;
+//				}
+//			}
+//
+//			for (auto neighbour : neighbourList)
+//			{
+//				if (neighbour->getTileStatus() != IMPASSABLE)
+//				{
+//					if (neighbour->getTileCost() < min)
+//					{
+//						min = neighbour->getTileCost();
+//						m_pOpenList.push_back(minTile);
+//						minTile = neighbour;
+//						minTileIndex = count;
+//					}
+//					count++;
+//				}
+//				else 
+//				{
+//					minTile = neighbour;
+//					m_pClosedList.push_back(minTile);
+//					minTile->setTileStatus(CLOSED);
+//				}
+//			}
+//
+//			// remove the reference of the current tile in the open list
+//			m_pPathLists.push_back(m_pOpenList[0]);
+//			m_pOpenList.pop_back(); // empties the open list
+//
+//			//adding the min tile to the open list
+//				m_pOpenList.push_back(minTile);
+//				minTile->setTileStatus(OPEN);
+//				neighbourList.erase(neighbourList.begin() + minTileIndex);
+//			
+//			// push all remaining neighbours onto the closed list
+//			for (auto neighbour : neighbourList)
+//			{
+//				if (neighbour->getTileStatus() == UNVISITED)
+//				{
+//					neighbour->setTileStatus(CLOSED);
+//					m_pClosedList.push_back(neighbour);
+//				}
+//			}
+//		}
+//
+//		m_displayPathList();
+//	}
+//}
 
 void PlayScene::m_setGridEnabled(bool state)
 {
@@ -599,7 +556,7 @@ void PlayScene::m_moveShip()
 	if (moveCounter < m_pPathLists.size())
 	{
 		m_pShip->getTransform()->position = m_getTile(m_pPathLists[moveCounter]->getGridPosition())->getTransform()->position + offest;
-		m_pShip->setGridPosition(m_pPathLists[moveCounter]->getGridPosition().x, m_pPathLists[moveCounter]->getGridPosition().y);
+		//m_pShip->setGridPosition(m_pPathLists[moveCounter]->getGridPosition().x, m_pPathLists[moveCounter]->getGridPosition().y);
 		if (Game::Instance()->getFrames() % 20 == 0)
 		{
 			moveCounter++;
@@ -609,5 +566,33 @@ void PlayScene::m_moveShip()
 	else
 	{
 		m_shipIsMoving = false;
+	}
+}
+
+void PlayScene::m_CheckEnemyLOS(DisplayObject* survivor_object)
+{
+	//if enemy to survivor distance is less than or equal to LOS distance
+	auto EnemyToSurvivorDistance = Util::distance(m_pEnemy->getTransform()->position, survivor_object->getTransform()->position);
+	if (EnemyToSurvivorDistance <= m_pEnemy->getLOSDistance())
+	{
+		std::vector<DisplayObject*> contactList;
+		for (auto object : getDisplayList())
+		{
+			//Check if object is farther than the target
+			auto EnemyToObjectDistance = Util::distance(m_pEnemy->getTransform()->position, object->getTransform()->position);
+
+			if (EnemyToObjectDistance <= EnemyToSurvivorDistance)
+			{
+				if ((object->getType() != m_pEnemy->getType()) && (object->getType() != survivor_object->getType()))
+				{
+					contactList.push_back(object);
+				}
+			}
+		}
+		contactList.push_back(survivor_object); // add the survivor at the end of the list.
+		auto hasLOS = CollisionManager::LOSCheck(m_pEnemy->getTransform()->position,
+			m_pEnemy->getTransform()->position + m_pEnemy->getCurrentDirection() * m_pEnemy->getLOSDistance(), contactList, survivor_object);
+
+		m_pEnemy->setHasLOS(hasLOS);
 	}
 }
