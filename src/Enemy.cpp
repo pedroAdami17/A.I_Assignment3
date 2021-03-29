@@ -6,7 +6,7 @@
 
 Enemy::Enemy() : m_maxSpeed(10.0f)
 {
-	TextureManager::Instance()->load("../Assets/textures/skeleton-idle_0.png", "enemy");
+	TextureManager::Instance()->load("../Assets/textures/Enemy/skeleton-idle_1.png", "enemy");
 
 	auto size = TextureManager::Instance()->getTextureSize("enemy");
 	setWidth(size.x);
@@ -16,60 +16,18 @@ Enemy::Enemy() : m_maxSpeed(10.0f)
 	getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 	getRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
 	getRigidBody()->isColliding = false;
-	setType(SHIP);
+	setType(ENEMY);
 
-	m_currentHeading = 0.0f; // current facing angle
-	m_currentDirection = glm::vec2(0.0f, 1.0f); // facing left
+	setCurrentHeading(0.0f); // current facing angle
+	setCurrentDirection(glm::vec2(1.0f, 0.0f)); //facing right
 	m_turnRate = 5.0f; // 5 degrees per frame
 
-	m_LOSDistance = 300.0f;
-	m_LOSColour = glm::vec4(1, 0, 0, 1);
+	setLOSDistance(400.0f);
+	setLOSColour(glm::vec4(1, 0, 0, 1));
 }
 
 Enemy::~Enemy()
 = default;
-
-glm::vec2 Enemy::getSurvivorPosition() const
-{
-	return m_survivorPosition;
-}
-
-float Enemy::getLOSDistance() const
-{
-	return m_LOSDistance;
-}
-
-bool Enemy::hasLOS() const
-{
-	return m_hasLOS;
-}
-
-float Enemy::getCurrentHeading() const
-{
-	return m_currentHeading;
-}
-
-void Enemy::setSurvivorPosition(glm::vec2 newPosition)
-{
-	m_survivorPosition = newPosition;
-}
-
-void Enemy::setLOSDistance(const float distance)
-{
-	m_LOSDistance = distance;
-}
-
-void Enemy::setHasLOS(const bool state)
-{
-	m_hasLOS = state;
-	m_LOSColour = (m_hasLOS) ? glm::vec4(0, 1, 0, 1) : glm::vec4(1, 0, 0, 1);
-}
-
-void Enemy::setCurrentHeading(float heading)
-{
-	m_currentHeading = heading;
-	m_changeDirection();
-}
 
 void Enemy::draw()
 {
@@ -78,10 +36,10 @@ void Enemy::draw()
 	const auto y = getTransform()->position.y;
 
 	// draw the ship
-	TextureManager::Instance()->draw("enemy", x, y, m_currentHeading, 255, true);
+	TextureManager::Instance()->draw("enemy", x, y, getCurrentHeading(), 255, true);
 
 	// draw LOS
-	Util::DrawLine(getTransform()->position, getTransform()->position + getCurrentDirection() * m_LOSDistance, m_LOSColour);
+	Util::DrawLine(getTransform()->position, getTransform()->position + getCurrentDirection() * getLOSDistance(), getLOSColour());
 }
 
 
@@ -97,33 +55,30 @@ void Enemy::clean()
 
 void Enemy::turnRight()
 {
-	m_currentHeading += m_turnRate;
-	if (m_currentHeading >= 360)
+	setCurrentHeading(getCurrentHeading() + m_turnRate);
+	if (getCurrentHeading() >= 360)
 	{
-		m_currentHeading -= 360.0f;
+		setCurrentHeading(getCurrentHeading() - 360.0f);
 	}
-	m_changeDirection();
 }
 
 void Enemy::turnLeft()
 {
-	m_currentHeading -= m_turnRate;
-	if (m_currentHeading < 0)
+	setCurrentHeading(getCurrentHeading() - m_turnRate);
+	if (getCurrentHeading() < 0)
 	{
-		m_currentHeading += 360.0f;
+		setCurrentHeading(getCurrentHeading() + 360.0f);
 	}
-
-	m_changeDirection();
 }
 
 void Enemy::moveForward()
 {
-	getRigidBody()->velocity = m_currentDirection * m_maxSpeed;
+	getRigidBody()->velocity = getCurrentDirection() * m_maxSpeed;
 }
 
 void Enemy::moveBack()
 {
-	getRigidBody()->velocity = m_currentDirection * -m_maxSpeed;
+	getRigidBody()->velocity = getCurrentDirection() *-m_maxSpeed;
 }
 
 void Enemy::move()
@@ -132,27 +87,16 @@ void Enemy::move()
 	getRigidBody()->velocity *= 0.9f;
 }
 
-glm::vec2 Enemy::getCurrentDirection() const
-{
-	return m_currentDirection;
-}
 
 float Enemy::getMaxSpeed() const
 {
 	return m_maxSpeed;
 }
 
-void Enemy::setCurrentDirection(glm::vec2 newDirection)
-{
-	m_currentDirection = newDirection;
-}
-
 void Enemy::setMaxSpeed(float newSpeed)
 {
 	m_maxSpeed = newSpeed;
 }
-
-
 
 void Enemy::m_checkBounds()
 {
@@ -186,13 +130,4 @@ void Enemy::m_reset()
 	const auto xComponent = rand() % (640 - getWidth()) + halfWidth + 1;
 	const auto yComponent = -getHeight();
 	getTransform()->position = glm::vec2(xComponent, yComponent);
-}
-
-void Enemy::m_changeDirection()
-{
-	const auto x = cos(m_currentHeading * Util::Deg2Rad);
-	const auto y = sin(m_currentHeading * Util::Deg2Rad);
-	m_currentDirection = glm::vec2(x, y);
-
-	glm::vec2 size = TextureManager::Instance()->getTextureSize("enemy");
 }

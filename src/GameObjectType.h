@@ -6,6 +6,7 @@ enum GameObjectType {
 	SPACE_SHIP,
 	OBSTACLE,
 	SHIP,
+	ENEMY,
 	TARGET,
 	WALL,
 	PLAYER,

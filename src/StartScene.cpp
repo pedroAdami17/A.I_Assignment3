@@ -54,9 +54,6 @@ void StartScene::start()
 	m_pInstructionsLabel->setParent(this);
 	addChild(m_pInstructionsLabel);
 
-	m_pInstructionsLabel = new Label("Ethan Armstrong ID: ", "Consolas", 30, blue, glm::vec2(400.0f, 230.0f));
-	m_pInstructionsLabel->setParent(this);
-	addChild(m_pInstructionsLabel);
 
 	// Start Button
 	m_pStartButton = new Button();

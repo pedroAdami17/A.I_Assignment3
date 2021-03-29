@@ -3,8 +3,6 @@
 #define __SHIP__
 
 #include "DisplayObject.h"
-#include "NavigationObject.h"
-#include "TextureManager.h"
 
 class Ship final : public DisplayObject
 {

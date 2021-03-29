@@ -1,12 +1,10 @@
 #include "ship.h"
-#include "glm/gtx/string_cast.hpp"
-#include "PlayScene.h"
 #include "TextureManager.h"
 #include "Util.h"
 
 Ship::Ship() : m_maxSpeed(10.0f)
 {
-	TextureManager::Instance()->load("../Assets/textures/survivor-move_shotgun_0.png", "ship");
+	TextureManager::Instance()->load("../Assets/textures/ship3.png", "ship");
 
 	auto size = TextureManager::Instance()->getTextureSize("ship");
 	setWidth(size.x);
@@ -40,8 +38,8 @@ void Ship::draw()
 
 void Ship::update()
 {
-	/*move();
-	m_checkBounds();*/
+	move();
+	m_checkBounds();
 }
 
 void Ship::clean()
