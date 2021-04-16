@@ -109,9 +109,9 @@ void PlayScene::start()
 	m_buildStateMachine();
 
 	//Background music
-	//SoundManager::Instance().load("../Assets/audio/bgMusic.ogg", "background_music", SOUND_MUSIC);
-	//SoundManager::Instance().playMusic("background_music", -1);
-	//SoundManager::Instance().setMusicVolume(15);
+	SoundManager::Instance().load("../Assets/audio/bgMusic.ogg", "background_music", SOUND_MUSIC);
+	SoundManager::Instance().playMusic("background_music", -1);
+	SoundManager::Instance().setMusicVolume(15);
 }
 
 void PlayScene::GUI_Function()

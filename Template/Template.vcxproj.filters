@@ -225,6 +225,18 @@
     <ClCompile Include="..\src\StateMachine.cpp">
       <Filter>StateMachine\CoreComponents</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Flee.cpp">
+      <Filter>Decision\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WaitBehindCover.cpp">
+      <Filter>Decision\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MoveToRange.cpp">
+      <Filter>Decision\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MoveBehindCover.cpp">
+      <Filter>Decision\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StartScene.h">
@@ -451,6 +463,18 @@
     </ClInclude>
     <ClInclude Include="..\src\StateMachine.h">
       <Filter>StateMachine\CoreComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Flee.h">
+      <Filter>Decision\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\WaitBehindCover.h">
+      <Filter>Decision\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MoveToRange.h">
+      <Filter>Decision\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MoveBehindCover.h">
+      <Filter>Decision\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

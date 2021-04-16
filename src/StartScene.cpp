@@ -54,6 +54,16 @@ void StartScene::start()
 	m_pInstructionsLabel->setParent(this);
 	addChild(m_pInstructionsLabel);
 
+	m_pInstructionsLabel = new Label("Press 'F' to flee.", "Consolas", 20, blue, glm::vec2(400.0f, 180.0f));
+	m_pInstructionsLabel->setParent(this);
+	addChild(m_pInstructionsLabel);
+	m_pInstructionsLabel = new Label("Press 'W' to wait behind cover.", "Consolas", 20, blue, glm::vec2(400.0f, 210.0f));
+	m_pInstructionsLabel->setParent(this);
+	addChild(m_pInstructionsLabel);
+	m_pInstructionsLabel = new Label("Press 'M' to move to the player.", "Consolas", 20, blue, glm::vec2(400.0f, 240.0f));
+	m_pInstructionsLabel->setParent(this);
+	addChild(m_pInstructionsLabel);
+
 
 	// Start Button
 	m_pStartButton = new Button();

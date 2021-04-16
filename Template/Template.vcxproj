@@ -169,12 +169,15 @@
     <ClCompile Include="..\src\CollisionManager.cpp" />
     <ClCompile Include="..\src\Condition.cpp" />
     <ClCompile Include="..\src\Enemy.cpp" />
+    <ClCompile Include="..\src\Flee.cpp" />
     <ClCompile Include="..\src\FloatCondition.cpp" />
     <ClCompile Include="..\src\LOSCondition.cpp" />
+    <ClCompile Include="..\src\MoveBehindCover.cpp" />
     <ClCompile Include="..\src\MoveToLOS.cpp" />
     <ClCompile Include="..\src\MoveToLOSAction.cpp" />
     <ClCompile Include="..\src\MoveToPlayer.cpp" />
     <ClCompile Include="..\src\MoveToPlayerAction.cpp" />
+    <ClCompile Include="..\src\MoveToRange.cpp" />
     <ClCompile Include="..\src\NavigationObject.cpp" />
     <ClCompile Include="..\src\Obstacle.cpp" />
     <ClCompile Include="..\src\Patrol.cpp" />
@@ -209,6 +212,7 @@
     <ClCompile Include="..\src\Target.cpp" />
     <ClCompile Include="..\src\TextureManager.cpp" />
     <ClCompile Include="..\src\Util.cpp" />
+    <ClCompile Include="..\src\WaitBehindCover.cpp" />
     <ClCompile Include="..\src\Walls.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -230,12 +234,15 @@
     <ClInclude Include="..\src\ConditionNode.h" />
     <ClInclude Include="..\src\DecisionTree.h" />
     <ClInclude Include="..\src\Enemy.h" />
+    <ClInclude Include="..\src\Flee.h" />
     <ClInclude Include="..\src\FloatCondition.h" />
     <ClInclude Include="..\src\LOSCondition.h" />
+    <ClInclude Include="..\src\MoveBehindCover.h" />
     <ClInclude Include="..\src\MoveToLOS.h" />
     <ClInclude Include="..\src\MoveToLOSAction.h" />
     <ClInclude Include="..\src\MoveToPlayer.h" />
     <ClInclude Include="..\src\MoveToPlayerAction.h" />
+    <ClInclude Include="..\src\MoveToRange.h" />
     <ClInclude Include="..\src\Patrol.h" />
     <ClInclude Include="..\src\PatrolAction.h" />
     <ClInclude Include="..\src\RadiusCondition.h" />
@@ -244,6 +251,7 @@
     <ClInclude Include="..\src\Transition.h" />
     <ClInclude Include="..\src\TreeNode.h" />
     <ClInclude Include="..\src\TreeNodeType.h" />
+    <ClInclude Include="..\src\WaitBehindCover.h" />
     <ClInclude Include="..\src\Walls.h" />
     <ClInclude Include="..\src\Button.h" />
     <ClInclude Include="..\src\CollisionManager.h" />
