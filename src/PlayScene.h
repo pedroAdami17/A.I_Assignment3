@@ -12,9 +12,9 @@
 #include "SpaceShip.h"
 #include "Target.h"
 #include "Tile.h"
-#include "StateMachine.h"
-#include "Condition.h"
-#include "FloatCondition.h"
+#include "DecisionTree.h"
+#include "CCETree.h"
+#include "CloseCombatEnemy.h"
 
 class PlayScene : public Scene
 {
@@ -36,21 +36,13 @@ private:
 	glm::vec2 m_mousePosition;
 	bool m_isGridEnabled;
 
-	Enemy* m_pEnemy;
+	CloseCombatEnemy* m_pCCE;
 	Ship* m_pShip;
 	Obstacle* m_pObstacle1;
 	Target* m_pTarget;
 	void m_CheckEnemyLOS(DisplayObject* object);
 
-
-	//sate machine properties 
-
-	Condition* m_pHasLOSCondition;
-	Condition* m_pIsWithinDectectionRadius;
-	FloatCondition* m_pIsWithinCombatRange;
-
-	StateMachine* m_pStateMachine;
-	void m_buildStateMachine();
+	CCETree* cceTree;
 
 	//heuristic
 	Heuristic currentHeuristic;

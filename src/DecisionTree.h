@@ -8,6 +8,14 @@
 #include "LOSCondition.h"
 #include "RadiusCondition.h"
 #include "CloseCombatCondition.h"
+#include "RangedCombatCondition.h"
+#include "CurrentHealthCondition.h"
+#include "PatrolAction.h"
+#include "CCEAttackAction.h"
+#include "RCEAttackAction.h"
+#include "MoveToLOSAction.h"
+#include "MoveToPlayerAction.h"
+#include "Flee.h"
 
 class DecisionTree
 {
@@ -23,18 +31,9 @@ public:
 	// for convenience
 	TreeNode* AddNode(TreeNode* parent, TreeNode* child_node, const TreeNodeType type);
 	void DisplayTree(); //for debug
-	void Update();
-
-	std::string MakeDecision(); //in order traversal
 
 private:
 	Agent* m_agent;
-
-	LOSCondition* m_LOSNode;
-	RadiusCondition* m_RadiusNode;
-	CloseCombatCondition* m_CloseCombatNode;
-
-	void m_buildTree();
 
 	std::vector<TreeNode*>m_treeNodeList;
 };

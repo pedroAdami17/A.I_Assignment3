@@ -61,6 +61,9 @@
     <Filter Include="StateMachine\Conditions">
       <UniqueIdentifier>{0325443d-cd19-4c68-ac39-7d5f192d7dcb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Decision\Trees">
+      <UniqueIdentifier>{d90239f9-27c9-476e-b9a9-5ca80f7685c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\StartScene.cpp">
@@ -171,9 +174,6 @@
     <ClCompile Include="..\src\Enemy.cpp">
       <Filter>Decision\Agents</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Agent.cpp">
-      <Filter>Decision\Agents</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\PatrolAction.cpp">
       <Filter>Decision\Actions</Filter>
     </ClCompile>
@@ -181,9 +181,6 @@
       <Filter>Decision\Actions</Filter>
     </ClCompile>
     <ClCompile Include="..\src\MoveToPlayerAction.cpp">
-      <Filter>Decision\Actions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\AttackAction.cpp">
       <Filter>Decision\Actions</Filter>
     </ClCompile>
     <ClCompile Include="..\src\RadiusCondition.cpp">
@@ -194,9 +191,6 @@
     </ClCompile>
     <ClCompile Include="..\src\LOSCondition.cpp">
       <Filter>Decision\Conditions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\DecisionTree.cpp">
-      <Filter>Decision\Core Compents</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Condition.cpp">
       <Filter>StateMachine\CoreComponents</Filter>
@@ -242,6 +236,30 @@
     </ClCompile>
     <ClCompile Include="..\src\RangedCombatEnemy.cpp">
       <Filter>Decision\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RangedCombatCondition.cpp">
+      <Filter>Decision\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Agent.cpp">
+      <Filter>Decision\Core Compents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\DecisionTree.cpp">
+      <Filter>Decision\Trees</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CCETree.cpp">
+      <Filter>Decision\Trees</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RCETree.cpp">
+      <Filter>Decision\Trees</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CurrentHealthCondition.cpp">
+      <Filter>Decision\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CCEAttackAction.cpp">
+      <Filter>Decision\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RCEAttackAction.cpp">
+      <Filter>Decision\Actions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -401,9 +419,6 @@
     <ClInclude Include="..\src\Enemy.h">
       <Filter>Decision\Agents</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Agent.h">
-      <Filter>Decision\Agents</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\PatrolAction.h">
       <Filter>Decision\Actions</Filter>
     </ClInclude>
@@ -411,9 +426,6 @@
       <Filter>Decision\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\src\MoveToPlayerAction.h">
-      <Filter>Decision\Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\AttackAction.h">
       <Filter>Decision\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\src\LOSCondition.h">
@@ -435,9 +447,6 @@
       <Filter>Decision\Core Compents</Filter>
     </ClInclude>
     <ClInclude Include="..\src\ConditionNode.h">
-      <Filter>Decision\Core Compents</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\DecisionTree.h">
       <Filter>Decision\Core Compents</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Condition.h">
@@ -487,6 +496,30 @@
     </ClInclude>
     <ClInclude Include="..\src\RangedCombatEnemy.h">
       <Filter>Decision\Agents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RangedCombatCondition.h">
+      <Filter>Decision\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Agent.h">
+      <Filter>Decision\Core Compents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CCETree.h">
+      <Filter>Decision\Trees</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\DecisionTree.h">
+      <Filter>Decision\Trees</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RCETree.h">
+      <Filter>Decision\Trees</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CurrentHealthCondition.h">
+      <Filter>Decision\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CCEAttackAction.h">
+      <Filter>Decision\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\RCEAttackAction.h">
+      <Filter>Decision\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

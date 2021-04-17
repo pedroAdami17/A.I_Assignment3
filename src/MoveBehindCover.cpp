@@ -3,7 +3,7 @@
 
 MoveBehindCoverAction::MoveBehindCoverAction()
 {
-	name = "Attack Action";
+	name = "Move Behind Cover Action";
 }
 
 MoveBehindCoverAction::~MoveBehindCoverAction()

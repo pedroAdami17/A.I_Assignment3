@@ -6,7 +6,7 @@
 #include <glm/vec4.hpp>
 #include "Agent.h"
 
-class Enemy final : public Agent
+class Enemy : public Agent
 {
 public:
 	Enemy();

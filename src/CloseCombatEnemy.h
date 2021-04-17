@@ -4,7 +4,7 @@
 
 #include "Enemy.h"
 
-class CloseCombatEnemy final : public Agent //\maybe make it public Enemy (not working right now)
+class CloseCombatEnemy final : public Enemy
 {
 public:
 	CloseCombatEnemy();

@@ -24,6 +24,11 @@ float Agent::getLOSDistance() const
 	return m_LOSDistance;
 }
 
+bool Agent::hasHealth() const
+{
+	return m_hasHealth;
+}
+
 bool Agent::hasLOS() const
 {
 	return m_hasLOS;

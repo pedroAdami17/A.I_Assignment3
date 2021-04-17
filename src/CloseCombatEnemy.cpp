@@ -45,8 +45,8 @@ void CloseCombatEnemy::draw()
 
 void CloseCombatEnemy::update()
 {
-	/*move();
-	m_checkBounds();*/
+	//move();
+	//m_checkBounds();
 }
 
 void CloseCombatEnemy::clean()

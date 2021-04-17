@@ -20,6 +20,7 @@ public:
 	glm::vec2 getTargetPosition() const;
 	glm::vec2 getCurrentDirection() const;
 	float getLOSDistance() const;
+	bool hasHealth() const;
 	bool hasLOS() const;
 	float getCurrentHeading() const;
 	glm::vec4 getLOSColour() const;
@@ -40,6 +41,7 @@ private:
 
 	//LOS
 	float m_LOSDistance;
+	bool m_hasHealth;
 	bool m_hasLOS;
 	glm::vec4 m_LOSColour;
 };

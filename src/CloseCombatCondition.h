@@ -14,6 +14,6 @@ public:
 
 	virtual bool Condition() override;
 private:
-	bool m_isWithinCombatRange;
+	bool m_isWithinCloseCombatRange;
 };
 #endif /* defined (__CLOSE_COMBAT_CONDITION__)*/

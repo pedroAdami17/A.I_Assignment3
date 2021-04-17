@@ -11,11 +11,11 @@ CloseCombatCondition::~CloseCombatCondition()
 
 void CloseCombatCondition::setIsWithinCombatRange(const bool state)
 {
-	m_isWithinCombatRange = state;
+	m_isWithinCloseCombatRange = state;
 	data = state;
 }
 
 bool CloseCombatCondition::Condition()
 {
-	return m_isWithinCombatRange;
+	return m_isWithinCloseCombatRange;
 }
