@@ -40,6 +40,7 @@ private:
 	CloseCombatEnemy* m_pCCE;
 	Ship* m_pShip;
 	Obstacle* m_pObstacle1;
+	int obstacleLives = 3;
 	Target* m_pTarget;
 	void m_CheckEnemyLOS(DisplayObject* object);
 

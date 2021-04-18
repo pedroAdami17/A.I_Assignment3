@@ -41,6 +41,17 @@ void PlayScene::update()
 	updateDisplayList();
 
 	m_CheckEnemyLOS(m_pTarget);
+
+	if(CollisionManager::AABBCheck(m_pTarget, m_pObstacle1))
+	{
+		obstacleLives--;
+	}
+	std::cout << "OBSTACLE LIVES = " << obstacleLives << "\n\n\n\n\n";
+
+	if (obstacleLives == 0)
+	{
+		removeChild(m_pObstacle1);
+	}
 }
 
 void PlayScene::clean()
@@ -100,6 +111,18 @@ void PlayScene::start()
 
 	m_pObstacle1 = new Obstacle();
 	m_pObstacle1->getTransform()->position = glm::vec2(300.0f, 100.0f);
+	addChild(m_pObstacle1);
+	
+	m_pObstacle1 = new Obstacle();
+	m_pObstacle1->getTransform()->position = glm::vec2(700.0f, 530.0f);
+	addChild(m_pObstacle1);
+
+	m_pObstacle1 = new Obstacle();
+	m_pObstacle1->getTransform()->position = glm::vec2(70.0f, 80.0f);
+	addChild(m_pObstacle1);
+
+	m_pObstacle1 = new Obstacle();
+	m_pObstacle1->getTransform()->position = glm::vec2(230.0f, 450.0f);
 	addChild(m_pObstacle1);
 
 	//m_pShip = new Ship();
