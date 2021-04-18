@@ -15,6 +15,7 @@
 #include "DecisionTree.h"
 #include "CCETree.h"
 #include "CloseCombatEnemy.h"
+#include "Sprite.h"
 
 class PlayScene : public Scene
 {

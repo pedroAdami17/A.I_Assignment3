@@ -40,6 +40,8 @@ public:
 
 	//IMGUI
 	bool isIMGUIActive();
+
+	bool m_bCanShoot = false;
 	
 private:
 	// Hide Constructor and Destructor 

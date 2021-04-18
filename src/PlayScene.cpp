@@ -93,6 +93,14 @@ void PlayScene::start()
 	m_pObstacle1 = new Obstacle();
 	m_pObstacle1->getTransform()->position = glm::vec2(400.0f, 300.0f);
 	addChild(m_pObstacle1);
+	
+	m_pObstacle1 = new Obstacle();
+	m_pObstacle1->getTransform()->position = glm::vec2(600.0f, 200.0f);
+	addChild(m_pObstacle1);
+
+	m_pObstacle1 = new Obstacle();
+	m_pObstacle1->getTransform()->position = glm::vec2(300.0f, 100.0f);
+	addChild(m_pObstacle1);
 
 	//m_pShip = new Ship();
 	//m_pShip->getTransform()->position = glm::vec2(600.0f, 300.0f);
@@ -127,7 +135,7 @@ void PlayScene::GUI_Function()
 	// See examples by uncommenting the following - also look at imgui_demo.cpp in the IMGUI filter
 	//ImGui::ShowDemoWindow();
 
-	ImGui::Begin("GAME3001 - Assignment 3", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
+	ImGui::Begin("GAME3001 - Assignment 4", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
 
 	// Allow enemy rotation
 	static int angle;
