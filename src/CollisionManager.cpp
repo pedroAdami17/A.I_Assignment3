@@ -76,8 +76,10 @@ bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
 			case OBSTACLE: 
 				std::cout << "Collision with Obstacle!" << std::endl;
 				SoundManager::Instance().playSound("collision", 0);
-				//obstacleLives--;
 				break;
+			case ENEMY:
+				std::cout << "Collision with Enemy!" << std::endl;
+				SoundManager::Instance().playSound("enemy_hit", 0);
 			default:
 				
 				break;

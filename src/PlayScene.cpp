@@ -42,16 +42,61 @@ void PlayScene::update()
 
 	m_CheckEnemyLOS(m_pTarget);
 
-	if(CollisionManager::AABBCheck(m_pTarget, m_pObstacle1))
-	{
-		obstacleLives--;
-	}
-	std::cout << "OBSTACLE LIVES = " << obstacleLives << "\n\n\n\n\n";
+	///*if (CollisionManager::AABBCheck(m_pTarget, m_pObstacles.at(2)))
+	//{
+	//	obstacle2Lives--;
+	//}*/
+	//if (CollisionManager::AABBCheck(m_pTarget, m_pObstacles.at(3)))
+	//{
+	//	obstacle3Lives--;
+	//}
+	//if(CollisionManager::AABBCheck(m_pTarget, m_pObstacles.at(5)))
+	//{
+	//	obstacle4Lives--;
+	//}
 
-	if (obstacleLives == 0)
+	for(auto obstacle : m_pObstacles)
 	{
-		removeChild(m_pObstacle1);
+		if(CollisionManager::AABBCheck(m_pTarget, obstacle))
+		{
+			if(obstacle == m_pObstacles.at(2))
+			{
+				obstacle2Lives--;
+			}
+			else if(obstacle == m_pObstacles.at(3))
+			{
+				obstacle3Lives--;
+			}
+			else if(obstacle == m_pObstacles.at(4))
+			{
+				obstacle4Lives--;
+			}
+		}
 	}
+
+
+	for(auto i = m_pObstacles.begin(); i < m_pObstacles.end(); ++i)
+	{
+		if(i == m_pObstacles.at(2) && obstacle2Lives == 0)
+		{
+			removeChild(*i);
+			delete *i;
+			m_pObstacles.erase(i);
+		}
+		if (i == m_pObstacles.at(3) && obstacle3Lives == 0)
+		{
+			removeChild(*i);
+			delete* i;
+			m_pObstacles.erase(i);
+		}
+		if (i == m_pObstacles.at(4) && obstacle4Lives == 0)
+		{
+			removeChild(*i);
+			delete* i;
+			m_pObstacles.erase(i);
+		}
+	}
+
 }
 
 void PlayScene::clean()
@@ -101,33 +146,29 @@ void PlayScene::start()
 	m_pCCE->getTransform()->position = glm::vec2(200.0f, 300.0f);
 	addChild(m_pCCE, 2);
 
-	m_pObstacle1 = new Obstacle();
-	m_pObstacle1->getTransform()->position = glm::vec2(400.0f, 300.0f);
-	addChild(m_pObstacle1);
+	m_pObstacles.push_back(new Obstacle());
+	m_pObstacles.back()->getTransform()->position = glm::vec2(400.0f, 300.0f);
+	addChild(m_pObstacles.back());
+
+	m_pObstacles.push_back(new Obstacle());
+	m_pObstacles.back()->getTransform()->position = glm::vec2(300.0f, 100.0f);
+	addChild(m_pObstacles.back());
 	
-	m_pObstacle1 = new Obstacle();
-	m_pObstacle1->getTransform()->position = glm::vec2(600.0f, 200.0f);
-	addChild(m_pObstacle1);
-
-	m_pObstacle1 = new Obstacle();
-	m_pObstacle1->getTransform()->position = glm::vec2(300.0f, 100.0f);
-	addChild(m_pObstacle1);
+	m_pObstacles.push_back(new Obstacle());
+	m_pObstacles.back()->getTransform()->position = glm::vec2(700.0f, 530.0f);
+	addChild(m_pObstacles.back());
 	
-	m_pObstacle1 = new Obstacle();
-	m_pObstacle1->getTransform()->position = glm::vec2(700.0f, 530.0f);
-	addChild(m_pObstacle1);
+	m_pObstacles.push_back(new Obstacle());
+	m_pObstacles.back()->getTransform()->position = glm::vec2(600.0f, 200.0f);
+	addChild(m_pObstacles.back());
 
-	m_pObstacle1 = new Obstacle();
-	m_pObstacle1->getTransform()->position = glm::vec2(70.0f, 80.0f);
-	addChild(m_pObstacle1);
+	m_pObstacles.push_back(new Obstacle());
+	m_pObstacles.back()->getTransform()->position = glm::vec2(70.0f, 80.0f);
+	addChild(m_pObstacles.back());
 
-	m_pObstacle1 = new Obstacle();
-	m_pObstacle1->getTransform()->position = glm::vec2(230.0f, 450.0f);
-	addChild(m_pObstacle1);
-
-	//m_pShip = new Ship();
-	//m_pShip->getTransform()->position = glm::vec2(600.0f, 300.0f);
-	//addChild(m_pShip);
+	m_pObstacles.push_back(new Obstacle());
+	m_pObstacles.back()->getTransform()->position = glm::vec2(230.0f, 450.0f);
+	addChild(m_pObstacles.back());
 
 	m_pTarget = new Target();
 	m_pTarget->getTransform()->position = glm::vec2(600.0f, 300.0f);

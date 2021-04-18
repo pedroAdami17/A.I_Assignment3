@@ -16,6 +16,7 @@
 #include "CCETree.h"
 #include "CloseCombatEnemy.h"
 #include "Sprite.h"
+#include <vector>
 
 class PlayScene : public Scene
 {
@@ -39,8 +40,8 @@ private:
 
 	CloseCombatEnemy* m_pCCE;
 	Ship* m_pShip;
-	Obstacle* m_pObstacle1;
-	int obstacleLives = 3;
+	std::vector<Obstacle*> m_pObstacles;
+	int obstacle2Lives = 3, obstacle3Lives = 3, obstacle4Lives = 4;
 	Target* m_pTarget;
 	void m_CheckEnemyLOS(DisplayObject* object);
 
