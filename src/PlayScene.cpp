@@ -42,33 +42,23 @@ void PlayScene::update()
 
 	m_CheckEnemyLOS(m_pTarget);
 
-	///*if (CollisionManager::AABBCheck(m_pTarget, m_pObstacles.at(2)))
-	//{
-	//	obstacle2Lives--;
-	//}*/
-	//if (CollisionManager::AABBCheck(m_pTarget, m_pObstacles.at(3)))
-	//{
-	//	obstacle3Lives--;
-	//}
-	//if(CollisionManager::AABBCheck(m_pTarget, m_pObstacles.at(5)))
-	//{
-	//	obstacle4Lives--;
-	//}
-
 	for(auto obstacle : m_pObstacles)
 	{
 		if(CollisionManager::AABBCheck(m_pTarget, obstacle))
 		{
 			if(obstacle == m_pObstacles.at(2))
 			{
+				std::cout << "Working" << std::endl;
 				obstacle2Lives--;
 			}
 			else if(obstacle == m_pObstacles.at(3))
 			{
+				std::cout << "Working" << std::endl;
 				obstacle3Lives--;
 			}
 			else if(obstacle == m_pObstacles.at(4))
 			{
+				std::cout << "Working" << std::endl;
 				obstacle4Lives--;
 			}
 		}
@@ -77,20 +67,23 @@ void PlayScene::update()
 
 	for(auto i = m_pObstacles.begin(); i < m_pObstacles.end(); ++i)
 	{
-		if(i == m_pObstacles.at(2) && obstacle2Lives == 0)
+		if(*i == m_pObstacles.at(2) && obstacle2Lives == 0)
 		{
+			std::cout << "Working" << std::endl;
 			removeChild(*i);
 			delete *i;
 			m_pObstacles.erase(i);
 		}
-		if (i == m_pObstacles.at(3) && obstacle3Lives == 0)
+		if (*i == m_pObstacles.at(3) && obstacle3Lives == 0)
 		{
+			std::cout << "Working" << std::endl;
 			removeChild(*i);
 			delete* i;
 			m_pObstacles.erase(i);
 		}
-		if (i == m_pObstacles.at(4) && obstacle4Lives == 0)
+		if (*i == m_pObstacles.at(4) && obstacle4Lives == 0)
 		{
+			std::cout << "Working" << std::endl;
 			removeChild(*i);
 			delete* i;
 			m_pObstacles.erase(i);
@@ -186,6 +179,8 @@ void PlayScene::start()
 	SoundManager::Instance().load("../Assets/audio/bgMusic.ogg", "background_music", SOUND_MUSIC);
 	SoundManager::Instance().playMusic("background_music", -1);
 	SoundManager::Instance().setMusicVolume(15);
+
+	std::cout << "Working" << std::endl;
 }
 
 void PlayScene::GUI_Function()
