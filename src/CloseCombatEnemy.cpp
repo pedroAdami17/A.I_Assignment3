@@ -22,8 +22,13 @@ CloseCombatEnemy::CloseCombatEnemy() : m_maxSpeed(10.0f)
 	setCurrentDirection(glm::vec2(1.0f, 0.0f)); //facing right
 	m_turnRate = 5.0f; // 5 degrees per frame
 
-	setLOSDistance(400.0f);
+	setLOSDistance(150.0f);
 	setLOSColour(glm::vec4(1, 0, 0, 1));
+
+	setRadiusDistance(200.0f);
+	setRadiusColour(glm::vec4(0, 0, 1, 1));
+
+	setRange(10.0f);
 }
 
 CloseCombatEnemy::~CloseCombatEnemy()
@@ -40,6 +45,9 @@ void CloseCombatEnemy::draw()
 
 	// draw LOS
 	Util::DrawLine(getTransform()->position, getTransform()->position + getCurrentDirection() * getLOSDistance(), getLOSColour());
+
+	Util::DrawLine(getTransform()->position, getTransform()->position +getCurrentDirection()* getRadiusDistance(), getRadiusColour());
+
 }
 
 

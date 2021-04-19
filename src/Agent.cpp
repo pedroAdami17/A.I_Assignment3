@@ -24,14 +24,29 @@ float Agent::getLOSDistance() const
 	return m_LOSDistance;
 }
 
-bool Agent::hasHealth() const
-{
-	return m_hasHealth;
-}
-
 bool Agent::hasLOS() const
 {
 	return m_hasLOS;
+}
+
+float Agent::getRadiusDistance() const
+{
+	return m_RadiusDistance;
+}
+
+bool Agent::hasRadius() const
+{
+	return m_hasRadius;
+}
+
+float Agent::getRange() const
+{
+	return m_Range;
+}
+
+bool Agent::hasRange() const
+{
+	return m_hasRange;
 }
 
 float Agent::getCurrentHeading() const
@@ -42,6 +57,11 @@ float Agent::getCurrentHeading() const
 glm::vec4 Agent::getLOSColour() const
 {
 	return m_LOSColour;
+}
+
+glm::vec4 Agent::getRadiusColour() const
+{
+	return m_RadiusColour;
 }
 
 void Agent::setTargetPosition(const glm::vec2 new_position)
@@ -65,6 +85,27 @@ void Agent::setHasLOS(const bool state)
 	m_LOSColour = (m_hasLOS) ? glm::vec4(0, 1, 0, 1) : glm::vec4(1, 0, 0, 1);
 }
 
+void Agent::setRadiusDistance(const float radius)
+{
+	m_RadiusDistance = radius;
+}
+
+void Agent::setHasRadius(const bool state)
+{
+	m_hasRadius = state;
+	m_RadiusColour = (m_hasRadius) ? glm::vec4(1, 1, 0, 1) : glm::vec4(0, 0, 1, 1);
+}
+
+void Agent::setRange(float range)
+{
+	m_Range = range;
+}
+
+void Agent::setHasRange(const bool state)
+{
+	m_Range = state;
+}
+
 void Agent::setCurrentHeading(const float heading)
 {
 	m_currentHeading = heading;
@@ -74,6 +115,11 @@ void Agent::setCurrentHeading(const float heading)
 void Agent::setLOSColour(const glm::vec4 colour)
 {
 	m_LOSColour = colour;
+}
+
+void Agent::setRadiusColour(const glm::vec4 colour)
+{
+	m_RadiusColour = colour;
 }
 
 void Agent::m_changeDirection()

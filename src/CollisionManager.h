@@ -25,11 +25,12 @@ public:
 
 	static int circleAABBsquaredDistance(glm::vec2 circle_centre, int circle_radius, glm::vec2 box_start, int box_width, int box_height);
 	static bool circleAABBCheck(GameObject* object1, GameObject* object2);
+	static bool circleRectCheck(const glm::vec2 circle_centre, float radius, glm::vec2 rect_start, const float rect_width, const float rect_height);
 
 	static bool pointRectCheck(glm::vec2 point, glm::vec2 rect_start, float rect_width, float rect_height);
 
 	static bool LOSCheck(glm::vec2 start_point, glm::vec2 end_point, const std::vector<DisplayObject*>& objects, DisplayObject* survivor);
-
+	static bool RadiusCheck(glm::vec2 centre, glm::vec2 radius, const std::vector<DisplayObject*>& objects, DisplayObject* target);
 private:
 	CollisionManager();
 	~CollisionManager();

@@ -43,7 +43,8 @@ private:
 	std::vector<Obstacle*> m_pObstacles;
 	int obstacle2Lives = 3, obstacle3Lives = 3, obstacle4Lives = 4;
 	Target* m_pTarget;
-	void m_CheckEnemyLOS(DisplayObject* object);
+	void m_CheckEnemyLOS(Enemy* enemy, DisplayObject* player);
+	void m_CheckEnemyRadius(Enemy* enemy, DisplayObject* player);
 
 	CCETree* cceTree;
 

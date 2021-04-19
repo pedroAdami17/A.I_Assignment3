@@ -19,7 +19,6 @@ private:
 	LOSCondition* m_LOSNode;
 	RadiusCondition* m_RadiusNode;
 	CloseCombatCondition* m_CloseCombatNode;
-	CurrentHealthCondition* m_CurrentHealthNode;
 
 	std::vector<TreeNode*>m_treeNodeList;
 };

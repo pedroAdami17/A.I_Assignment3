@@ -234,7 +234,8 @@ bool CollisionManager::circleAABBCheck(GameObject* object1, GameObject* object2)
 
 	if (circleAABBsquaredDistance(circleCentre, circleRadius, boxStart, boxWidth, boxHeight) <= (circleRadius * circleRadius))
 	{
-		if (!object2->getRigidBody()->isColliding) {
+		if (!object2->getRigidBody()->isColliding) 
+		{
 
 			object2->getRigidBody()->isColliding = true;
 
@@ -303,6 +304,36 @@ bool CollisionManager::circleAABBCheck(GameObject* object1, GameObject* object2)
 	return false;
 }
 
+bool CollisionManager::circleRectCheck(const glm::vec2 circle_centre, const float radius, const glm::vec2 rect_start, const float rect_width, const float rect_height) // did not work 
+{
+	const auto cx = circle_centre.x;
+	const auto cy = circle_centre.y;
+	const auto r = radius;
+	const auto rx = rect_start.x;
+	const auto ry = rect_start.y;
+	const auto rw = rect_width;
+	const auto rh = rect_height;
+
+	//if the radius location is the same as a side return true
+
+	const auto radius1 = glm::vec2(cx + r, cy + r);
+	const auto radius2 = glm::vec2(cx - r, cy - r);
+	const auto radius3 = glm::vec2(cx - r, cy + r);
+	const auto radius4 = glm::vec2(cx + r, cy - r);
+
+	const auto left = pointRectCheck(radius1, glm::vec2(rx, ry), rw, rh);
+	const auto right = pointRectCheck(radius2, glm::vec2(rx, ry), rw, rh);
+	const auto top = pointRectCheck(radius3, glm::vec2(rx, ry), rw, rh);
+	const auto bottom = pointRectCheck(radius4, glm::vec2(rx, ry), rw, rh);
+
+	if (left || right || top || bottom)
+	{
+		return true;
+	}
+	return false;
+}
+
+
 bool CollisionManager::pointRectCheck(const glm::vec2 point, const glm::vec2 rect_start, const float rect_width, const float rect_height)
 {
 	const float topLeftX = rect_start.x - rect_width * 0.5;
@@ -327,7 +358,7 @@ bool CollisionManager::LOSCheck(glm::vec2 start_point, glm::vec2 end_point, cons
 		auto objectOffset = glm::vec2(object->getWidth() * 0.5f, object->getHeight() * 0.5f);
 
 		//Check if Line collides with an object in the list
-		if (lineRectCheck(start_point, end_point, object->getTransform()->position - objectOffset, object->getWidth(), object->getHeight()));
+		if (lineRectCheck(start_point, end_point, object->getTransform()->position - objectOffset, object->getWidth(), object->getHeight()))
 		{
 			//If collision is with the survivor object, the LOS is true
 			if(object->getType() == survivor->getType())
@@ -340,6 +371,25 @@ bool CollisionManager::LOSCheck(glm::vec2 start_point, glm::vec2 end_point, cons
 	}
 
 	//if the line does not collide with an object that is in the survivor, then LOS is false
+	return false;
+}
+
+bool CollisionManager::RadiusCheck(glm::vec2 centre, glm::vec2 radius, const std::vector<DisplayObject*>& objects, DisplayObject* target)
+{
+	for (auto object : objects)
+	{
+		auto objectOffset = glm::vec2(object->getWidth() * 0.5f, object->getHeight() * 0.5f);
+
+		if (lineRectCheck(centre, radius, object->getTransform()->position-objectOffset,object->getWidth(),object->getHeight()))
+		{
+			if (object->getType() == target->getType())
+			{
+				return true;
+			}
+			return false;
+		}
+	}
+
 	return false;
 }
 

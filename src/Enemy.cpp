@@ -98,6 +98,16 @@ void Enemy::setMaxSpeed(float newSpeed)
 	m_maxSpeed = newSpeed;
 }
 
+void Enemy::setLeftWhisker(glm::vec2 start, glm::vec2 end)
+{
+	m_leftWhisker.setLine(start, end);
+}
+
+void Enemy::setRightWhisker(glm::vec2 start, glm::vec2 end)
+{
+	m_rightWhisker.setLine(start, end);
+}
+
 void Enemy::m_checkBounds()
 {
 

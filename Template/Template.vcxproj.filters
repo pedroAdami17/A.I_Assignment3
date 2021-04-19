@@ -219,9 +219,6 @@
     <ClCompile Include="..\src\StateMachine.cpp">
       <Filter>StateMachine\CoreComponents</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Flee.cpp">
-      <Filter>Decision\Actions</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\WaitBehindCover.cpp">
       <Filter>Decision\Actions</Filter>
     </ClCompile>
@@ -251,9 +248,6 @@
     </ClCompile>
     <ClCompile Include="..\src\RCETree.cpp">
       <Filter>Decision\Trees</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\CurrentHealthCondition.cpp">
-      <Filter>Decision\Conditions</Filter>
     </ClCompile>
     <ClCompile Include="..\src\CCEAttackAction.cpp">
       <Filter>Decision\Actions</Filter>
@@ -482,9 +476,6 @@
     <ClInclude Include="..\src\StateMachine.h">
       <Filter>StateMachine\CoreComponents</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Flee.h">
-      <Filter>Decision\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\WaitBehindCover.h">
       <Filter>Decision\Actions</Filter>
     </ClInclude>
@@ -515,17 +506,19 @@
     <ClInclude Include="..\src\RCETree.h">
       <Filter>Decision\Trees</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\CurrentHealthCondition.h">
-      <Filter>Decision\Conditions</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\CCEAttackAction.h">
       <Filter>Decision\Actions</Filter>
     </ClInclude>
     <ClInclude Include="..\src\RCEAttackAction.h">
       <Filter>Decision\Actions</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="..\src\Bullet.h">
       <Filter>Game Objects</Filter>
+=======
+    <ClInclude Include="..\src\Line.h">
+      <Filter>Core</Filter>
+>>>>>>> Stashed changes
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

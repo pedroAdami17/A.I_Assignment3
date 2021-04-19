@@ -40,6 +40,7 @@ void PlayScene::update()
 {
 	updateDisplayList();
 
+<<<<<<< Updated upstream
 	m_CheckEnemyLOS(m_pTarget);
 
 	for(auto obstacle : m_pObstacles)
@@ -93,6 +94,10 @@ void PlayScene::update()
 		}
 	}
 
+=======
+	//m_CheckEnemyLOS(m_pCCE, m_pTarget);
+	m_CheckEnemyRadius(m_pCCE, m_pTarget);
+>>>>>>> Stashed changes
 }
 
 void PlayScene::clean()
@@ -179,11 +184,17 @@ void PlayScene::start()
 	std::cout << "------------------------\n" << std::endl;
 
 	//Background music
+<<<<<<< Updated upstream
 	SoundManager::Instance().load("../Assets/audio/bgMusic.ogg", "background_music", SOUND_MUSIC);
 	SoundManager::Instance().playMusic("background_music", -1);
 	SoundManager::Instance().setMusicVolume(15);
 
 	std::cout << "Working" << std::endl;
+=======
+	//SoundManager::Instance().load("../Assets/audio/bgMusic.ogg", "background_music", SOUND_MUSIC);
+	//SoundManager::Instance().playMusic("background_music", -1);
+	//SoundManager::Instance().setMusicVolume(15);
+>>>>>>> Stashed changes
 }
 
 void PlayScene::GUI_Function()
@@ -247,30 +258,66 @@ void PlayScene::GUI_Function()
 }
 
 
-void PlayScene::m_CheckEnemyLOS(DisplayObject* target_object) // move to the enemy some how for ease of coding
+void PlayScene::m_CheckEnemyLOS(Enemy* enemy,DisplayObject* player)
 {
 	// if ship to target distance is less than or equal to LOS Distance
-	auto ShipToTargetDistance = Util::distance(m_pCCE->getTransform()->position, target_object->getTransform()->position);
-	if (ShipToTargetDistance <= m_pCCE->getLOSDistance())
+	auto EnemyToTargetDistance = Util::distance(enemy->getTransform()->position, player->getTransform()->position);
+	if (EnemyToTargetDistance <= enemy->getLOSDistance())
 	{
 		std::vector<DisplayObject*> contactList;
 		for (auto object : getDisplayList())
 		{
 			// check if object is farther than than the target
-			auto ShipToObjectDistance = Util::distance(m_pCCE->getTransform()->position, object->getTransform()->position);
+			auto EnemyToObjectDistance = Util::distance(enemy->getTransform()->position, object->getTransform()->position);
 
-			if (ShipToObjectDistance <= ShipToTargetDistance)
+			if (EnemyToObjectDistance <= EnemyToTargetDistance)
 			{
-				if ((object->getType() != m_pCCE->getType()) && (object->getType() != target_object->getType()))
+				if ((object->getType() != enemy->getType()) && (object->getType() != player->getType()))
 				{
 					contactList.push_back(object);
 				}
 			}
 		}
-		contactList.push_back(target_object); // add the target to the end of the list
-		auto hasLOS = CollisionManager::LOSCheck(m_pCCE->getTransform()->position,
-			m_pCCE->getTransform()->position + m_pCCE->getCurrentDirection() * m_pCCE->getLOSDistance(), contactList, target_object);
+		contactList.push_back(player); // add the target to the end of the list
+		auto hasLOS = CollisionManager::LOSCheck(enemy->getTransform()->position,
+			enemy->getTransform()->position + enemy->getCurrentDirection() * enemy->getLOSDistance(), contactList, player);
 
-		m_pCCE->setHasLOS(hasLOS);
+		enemy->setHasLOS(hasLOS);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+void PlayScene::m_CheckEnemyRadius(Enemy* enemy, DisplayObject* player)
+{
+	auto EnemyToTargetDistance = Util::distance(enemy->getTransform()->position, player->getTransform()->position);
+	if (EnemyToTargetDistance <= enemy->getRadiusDistance())
+	{
+		std::vector<DisplayObject*>contactList;
+		for (auto object : getDisplayList())
+		{
+			auto EnemyToObjectDistance = Util::distance(enemy->getTransform()->position, object->getTransform()->position);
+
+			if (EnemyToObjectDistance <= EnemyToTargetDistance)
+			{
+				if ((object->getType() != enemy->getType()) && (object->getType() != player->getType()))
+				{
+					contactList.push_back(object);
+				}
+			}
+		}
+		contactList.push_back(player);
+		auto hasRadius = CollisionManager::RadiusCheck(enemy->getTransform()->position,
+			getTransform()->position + enemy->getCurrentDirection() * enemy->getRadiusDistance(), contactList, player);
+
+		enemy->setHasRadius(hasRadius);
 	}
 }
