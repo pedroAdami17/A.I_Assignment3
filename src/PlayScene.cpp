@@ -71,22 +71,25 @@ void PlayScene::update()
 		{
 			std::cout << "Working" << std::endl;
 			removeChild(*i);
-			delete *i;
-			m_pObstacles.erase(i);
+			//delete *i;
+			//m_pObstacles.erase(i);
+			SoundManager::Instance().playSound("obstacleExplosion", 0);
 		}
 		if (*i == m_pObstacles.at(3) && obstacle3Lives == 0)
 		{
-			std::cout << "Working" << std::endl;
+			std::cout << "Working" << std::endl;  
 			removeChild(*i);
-			delete* i;
-			m_pObstacles.erase(i);
+			//delete* i;
+			//m_pObstacles.erase(i);
+			SoundManager::Instance().playSound("obstacleExplosion", 0);
 		}
 		if (*i == m_pObstacles.at(4) && obstacle4Lives == 0)
 		{
 			std::cout << "Working" << std::endl;
 			removeChild(*i);
-			delete* i;
-			m_pObstacles.erase(i);
+			//delete* i;
+			//m_pObstacles.erase(i);
+			SoundManager::Instance().playSound("obstacleExplosion", 0);
 		}
 	}
 

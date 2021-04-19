@@ -17,7 +17,8 @@ Obstacle::Obstacle()
 	setType(OBSTACLE);
 	getRigidBody()->isColliding = false;
 
-	SoundManager::Instance().load("../Assets/audio/longDistance_gunshot.ogg", "collision", SOUND_SFX);
+	SoundManager::Instance().load("../Assets/audio/obstacle_hit.ogg", "obstacleCollision", SOUND_SFX);
+	SoundManager::Instance().load("../Assets/audio/longDistance_gunshot.ogg", "obstacleExplosion", SOUND_SFX);
 }
 
 Obstacle::~Obstacle()
