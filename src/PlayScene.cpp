@@ -40,8 +40,8 @@ void PlayScene::update()
 {
 	updateDisplayList();
 
-<<<<<<< Updated upstream
-	m_CheckEnemyLOS(m_pTarget);
+
+	/*m_CheckEnemyLOS(m_pTarget);*/
 
 	for(auto obstacle : m_pObstacles)
 	{
@@ -94,10 +94,9 @@ void PlayScene::update()
 		}
 	}
 
-=======
 	//m_CheckEnemyLOS(m_pCCE, m_pTarget);
 	m_CheckEnemyRadius(m_pCCE, m_pTarget);
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 }
 
 void PlayScene::clean()
@@ -184,17 +183,17 @@ void PlayScene::start()
 	std::cout << "------------------------\n" << std::endl;
 
 	//Background music
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
 	SoundManager::Instance().load("../Assets/audio/bgMusic.ogg", "background_music", SOUND_MUSIC);
 	SoundManager::Instance().playMusic("background_music", -1);
 	SoundManager::Instance().setMusicVolume(15);
 
 	std::cout << "Working" << std::endl;
-=======
+
 	//SoundManager::Instance().load("../Assets/audio/bgMusic.ogg", "background_music", SOUND_MUSIC);
 	//SoundManager::Instance().playMusic("background_music", -1);
 	//SoundManager::Instance().setMusicVolume(15);
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
 }
 
 void PlayScene::GUI_Function()
